@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>AI Disease Prediction Dashboard</title>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+
+<!-- HEADER -->
+<div class="header">
+    <h1>🩺 AI Disease Prediction</h1>
+    <div class="nav-buttons">
+        <a href="/history" class="nav-btn">History</a>
+        <a href="/logout" class="nav-btn logout-btn">Logout</a>
+    </div>
+
+</div>
+</div>
+
+<!-- MAIN CONTAINER -->
+<div class="main-container">
+
+<form action="/predict" method="POST">
+
+<div class="glass-card symptom-box">
+
+<h3>Select Symptoms</h3>
+
+<input type="text" id="symptomSearch"
+placeholder="Search symptom..."
+onkeyup="filterSymptoms()"
+class="search-box">
+
+<div class="symptom-scroll">
+<div class="symptom-grid">
+
+{% for symptom in symptoms %}
+<label class="symptom-item">
+<input type="checkbox" name="symptoms" value="{{ symptom }}">
+{{ symptom }}
+</label>
+{% endfor %}
+
+</div>
+</div>
+</div>
+
+<!-- BUTTONS -->
+<div class="btn-container">
+<button type="submit" class="predict-btn" onclick="showSpinner()">
+    Predict Disease
+</button>
+<button type="button" class="voice-btn" onclick="startVoice()">🎤speak symptoms</button>
+</div>
+<!-- Loading Spinner -->
+<div id="loadingSpinner" class="spinner-container">
+    <div class="spinner"></div>
+    <p>Analyzing Symptoms...</p>
+</div>
+</form>
+
+<!-- RESULT + GRAPH CONTAINER -->
+{% if prediction %}
+
+<div class="result-container">
+
+<!-- RESULT CARD -->
+<div class="glass-card result-card fade-in">
+
+<h2 class="result-title">📋 Diagnosis Result</h2>
+
+<div class="prediction-box">
+<p class="prediction-label">🩺 Prediction</p>
+<h1>{{ prediction }}</h1>
+</div>
+
+<div class="info-card">
+<h3>📊 Probability</h3>
+<p>{{ probability }}%</p>
+</div>
+
+<div class="info-card">
+<h3>🏆 Top Possible Diseases</h3>
+<ul class="top3-list">
+{% for disease, prob in top3 %}
+<li class="disease-item">
+<p>{{ disease }} — {{ (prob * 100)|round(2) }}%</p>
+<div class="progress-bar">
+<div style="width: {{ (prob*100)|round(2) }}%"></div>
+</div>
+</li>
+{% endfor %}
+</ul>
+<div class="info-card">
+<h3>🛡 Precaution</h3>
+<p>{{ precaution }}</p>
+</div>
+<div class="info-card">
+<h3>👨‍⚕ Recommended Doctor</h3>
+<p>{{ doctor }}</p>
+<div class="action-buttons">
+
+<a href="{{ map_link }}" target="_blank" class="map-btn">
+📍 Find Nearby Doctor
+</a>
+
+<a href="/download_report" class="download-btn">
+⬇ Download Report
+</a>
+
+</div>
+
+<!-- GRAPH CARD -->
+<div class="glass-card graph-card">
+<h3>📈 Model Accuracy</h3>
+<img src="{{ url_for('static', filename='accuracy.png') }}">
+</div>
+
+</div>
+
+{% endif %}
+
+</div>
+</script>
+<!-- CHATBOX -->
+<div class="chat-container" id="chatBox">
+
+<div class="chat-header">
+AI Health Assistant
+<span onclick="toggleChat()">✖</span>
+</div>
+
+<div class="chat-body" id="chatBody"></div>
+
+<div class="chat-input">
+<input type="text" id="chatInput" placeholder="Enter symptoms...">
+<button onclick="sendMessage()">Send</button>
+</div>
+
+</div>
+
+<script>
+
+/* DARK MODE */
+function toggleMode(){
+    document.body.classList.toggle("dark");
+}
+
+/* CHAT TOGGLE */
+function toggleChat(){
+    document.getElementById("chatBox").classList.toggle("show-chat");
+}
+
+/* CHATBOT */
+function sendMessage(){
+
+let input = document.getElementById("chatInput").value;
+let body = document.getElementById("chatBody");
+
+body.innerHTML += `<div class='user-msg'>${input}</div>`;
+body.scrollTop = body.scrollHeight;
+fetch("/ml_chat",{
+method:"POST",
+headers:{"Content-Type":"application/json"},
+body:JSON.stringify({message:input})
+})
+.then(res=>res.json())
+.then(data=>{
+typingAnimation(data.reply);
+});
+
+}
+
+/* TYPING EFFECT */
+function typingAnimation(text){
+
+let body = document.getElementById("chatBody");
+
+let msg = document.createElement("div");
+msg.className="bot-msg";
+body.appendChild(msg);
+
+let i=0;
+
+function type(){
+if(i<text.length){
+msg.innerHTML += text.charAt(i);
+i++;
+body.scrollTop = body.scrollHeight;
+setTimeout(type,20);
+}
+}
+
+type();
+}
+
+/* SEARCH FILTER */
+function filterSymptoms(){
+
+let input = document.getElementById("symptomSearch").value.toLowerCase();
+let items = document.querySelectorAll(".symptom-item");
+
+items.forEach(item=>{
+item.style.display = item.innerText.toLowerCase().includes(input) ? "block" : "none";
+});
+}
+
+/* VOICE INPUT */
+function startVoice(){
+
+if (!('webkitSpeechRecognition' in window)) {
+alert("Speech Recognition not supported");
+return;
+}
+
+const recognition = new webkitSpeechRecognition();
+
+recognition.lang = "en-US";
+recognition.start();
+
+recognition.onresult = function (event) {
+const speech = event.results[0][0].transcript;
+document.getElementById("symptomSearch").value = speech;
+filterSymptoms();
+};
+
+}
+
+</script>
+<script>
+
+function showSpinner(){
+    document.getElementById("loadingSpinner").style.display = "flex";
+}
+
+window.onload = function(){
+    let spinner = document.getElementById("loadingSpinner");
+    if(spinner){
+        spinner.style.display = "none";
+    }
+}
+
+</script>
+</div>
+
+<div class="chat-icon" onclick="toggleChat()">💬</div>
+<button onclick="toggleMode()" class="dark-floating">🌙</button>
+
+</body>
+</body>
+</button>
+</body>
+</html>

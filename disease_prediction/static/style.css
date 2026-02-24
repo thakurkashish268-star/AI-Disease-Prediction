@@ -1,0 +1,528 @@
+body{
+font-family:Poppins;
+background:linear-gradient(135deg,#667eea,#764ba2);
+color:white;
+margin:0;
+transition: background 0.5s ease, color 0.5s ease;
+}
+
+.dark{
+background:#121212;
+}
+
+/* HEADER */
+.header{
+display:flex;
+justify-content:space-between;
+padding:20px 40px;
+align-items:center;
+}
+
+.mode-btn{
+padding:8px 14px;
+border:none;
+cursor:pointer;
+border-radius:8px;
+}
+
+/* MAIN */
+.main-container{
+width:85%;
+margin:auto;
+}
+
+/* GLASS CARD */
+.glass-card{
+background:rgba(255,255,255,0.1);
+backdrop-filter:blur(10px);
+padding:20px;
+border-radius:15px;
+margin-top:20px;
+box-shadow:0 8px 32px rgba(0,0,0,0.3);
+transition:0.3s;
+}
+
+.glass-card:hover{
+transform:translateY(-4px);
+}
+
+/* SYMPTOM SCROLL */
+.symptom-scroll{
+max-height:250px;
+overflow-y:auto;
+padding-right:8px;
+}
+
+/* SCROLLBAR */
+.symptom-scroll::-webkit-scrollbar{
+width:8px;
+}
+
+.symptom-scroll::-webkit-scrollbar-track{
+background:rgba(255,255,255,0.1);
+border-radius:10px;
+}
+
+.symptom-scroll::-webkit-scrollbar-thumb{
+background:#00d4ff;
+border-radius:10px;
+}
+
+/* SYMPTOM GRID */
+.symptom-grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:10px;
+}
+
+/* SYMPTOM ITEM */
+.symptom-item{
+background:rgba(255,255,255,0.08);
+padding:8px;
+border-radius:8px;
+cursor:pointer;
+transition:0.3s;
+}
+
+.symptom-item:hover{
+background:rgba(0,212,255,0.3);
+}
+
+/* SEARCH */
+.search-box{
+width:100%;
+padding:10px;
+margin-bottom:12px;
+border-radius:8px;
+border:none;
+outline:none;
+font-size:14px;
+}
+
+/* BUTTONS */
+.btn-container{
+display:flex;
+gap:15px;
+margin-top:15px;
+}
+
+.predict-btn{
+background:#00d4ff;
+border:none;
+padding:12px 25px;
+border-radius:8px;
+cursor:pointer;
+font-weight:bold;
+transition:0.3s;
+}
+
+.predict-btn:hover{
+transform:scale(1.05);
+}
+.voice-btn{
+background: #b41f02;
+border:none;
+color:white;
+padding:10px 14px;
+border-radius:8px;
+cursor:pointer;
+transition:0.3s;
+box-shadow:0 4px 12px rgba(0,0,0,0.2);
+}
+
+.voice-btn:hover{
+transform:scale(1.05);
+}
+
+/* RESULT CONTAINER */
+.result-container{
+display:flex;
+justify-content:left;
+align-items:flex-start;
+gap:20px;
+margin-top:40px;
+flex-wrap:wrap;
+}
+
+/* RESULT CARD (REDUCED SIZE) */
+.result-card{
+width:420px;
+padding:18px;
+}
+.top3-list{
+list-style:none;
+padding:0;
+margin:0;
+}
+
+.top3-list li{
+background:rgba(0,212,255,0.15);
+margin:8px 0;
+padding:10px;
+border-radius:8px;
+font-weight:500;
+transition:0.3s;
+}
+
+.top3-list li:hover{
+background:rgba(0,212,255,0.35);
+transform:translateX(5px);
+}
+
+/* GRAPH CARD */
+.graph-card{
+width:320px;
+padding:15px;
+text-align:center;
+}
+
+.graph-card img{
+width:100%;
+border-radius:15px;
+box-shadow:0 4px 15px rgba(0,0,0,0.3);
+}
+
+/* RESULT TITLE */
+.result-title{
+text-align:center;
+font-size:24px;
+margin-bottom:18px;
+}
+
+/* PREDICTION BOX (SMALLER) */
+.prediction-box{
+background:linear-gradient(135deg,#ff4d4d,#cc0000);
+color:white;
+padding:18px;
+border-radius:12px;
+text-align:center;
+margin-bottom:18px;
+}
+.prediction-box{
+animation: pop 0.5s ease;
+}
+
+@keyframes pop{
+0%{transform:scale(0.8);}
+100%{transform:scale(1);}
+}
+
+.prediction-label{
+font-size:16px;
+opacity:0.8;
+}
+
+.prediction-box h1{
+font-size:26px;
+margin-top:5px;
+}
+
+/* INFO CARD */
+.info-card{
+background:white;
+color:black;
+padding:15px;
+margin-top:12px;
+border-radius:10px;
+box-shadow:0px 4px 10px rgba(0,0,0,0.1);
+font-size:14px;
+}
+
+/* PROGRESS BAR */
+.progress-bar{
+width:100%;
+height:8px;
+background:#eee;
+border-radius:10px;
+overflow:hidden;
+margin-top:8px;
+}
+.progress-fill{
+height:100%;
+background:linear-gradient(90deg,#00c6ff,#0072ff);
+width:0%;
+animation: fillBar 1.2s forwards;
+}
+
+
+@keyframes fillBar{
+from{width:0%;}
+}
+#probBar{
+height:100%;
+background:linear-gradient(90deg,#00c6ff,#0072ff);
+width:0%;
+transition:0.5s;
+}
+
+/* CHAT BUTTON */
+.chat-icon{
+position:fixed !important;
+bottom:25px;
+right:25px;
+width:60px;
+height:60px;
+border-radius:50%;
+background:linear-gradient(135deg,#00c6ff,#0072ff);
+display:flex;
+justify-content:center;
+align-items:center;
+font-size:28px;
+cursor:pointer;
+box-shadow:0 6px 20px rgba(0,0,0,0.3);
+z-index:9999;
+transition:0.3s;
+}
+
+/* DARK MODE BUTTON */
+.dark-floating{
+position:fixed !important;
+bottom:25px;
+left:25px;
+width:55px;
+height:55px;
+border:none;
+border-radius:50%;
+background:linear-gradient(135deg,#667eea,#764ba2);
+color:white;
+font-size:22px;
+cursor:pointer;
+box-shadow:0 6px 20px rgba(0,0,0,0.3);
+z-index:9999;
+transition:0.3s;
+}
+
+/* CHATBOX */
+.chat-container{
+position:fixed;
+bottom:90px;
+right:20px;
+width:320px;
+background:white;
+color:black;
+border-radius:15px;
+display:none;
+flex-direction:column;
+}
+
+.show-chat{
+display:flex;
+}
+
+.chat-header{
+background:#667eea;
+color:white;
+padding:10px;
+display:flex;
+justify-content:space-between;
+}
+
+.chat-body{
+height:250px;
+overflow-y:auto;
+padding:10px;
+}
+
+.user-msg{
+background:#00d4ff;
+padding:8px;
+margin:5px;
+border-radius:8px;
+color:white;
+text-align:right;
+}
+
+.bot-msg{
+background:#eee;
+padding:8px;
+margin:5px;
+border-radius:8px;
+}
+
+.chat-input{
+display:flex;
+border-top:1px solid #ddd;
+}
+
+.chat-input input{
+flex:1;
+border:none;
+padding:10px;
+}
+
+.chat-input button{
+background:#667eea;
+border:none;
+color:white;
+padding:10px;
+}
+
+/* MOBILE */
+@media(max-width:900px){
+.result-container{
+flex-direction:column;
+align-items:center;
+}
+
+.result-card,
+.graph-card{
+width:95%;
+}
+}
+.fade-in{
+    animation: popUp 0.6s ease forwards;
+    transform: scale(0.8);
+    opacity:0;
+}
+
+@keyframes popUp{
+    to{
+        transform: scale(1);
+        opacity:1;
+    }
+}
+.spinner-container{
+    position: fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background: rgba(0,0,0,0.6);
+    display:none;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    z-index:999;
+    color:white;
+    font-size:18px;
+}
+
+.spinner{
+    width:60px;
+    height:60px;
+    border:6px solid #eee;
+    border-top:6px solid #00d4ff;
+    border-radius:50%;
+    animation: spin 1s linear infinite;
+    margin-bottom:15px;
+}
+
+@keyframes spin{
+    100%{
+        transform: rotate(360deg);
+    }
+}
+/* NAV BUTTON ALIGNMENT */
+.header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:20px 40px;
+}
+
+/* Right-side container */
+.nav-buttons{
+display:flex;
+gap:12px;
+align-items:center;
+}
+
+/* Button style */
+.nav-btn{
+text-decoration:none;
+background:linear-gradient(135deg,#00c6ff,#0072ff);
+color:white;
+padding:9px 18px;
+border-radius:25px;
+font-size:14px;
+font-weight:500;
+transition:0.3s;
+box-shadow:0 4px 12px rgba(0,0,0,0.2);
+}
+
+/* Hover animation */
+.nav-btn:hover{
+transform:translateY(-2px);
+box-shadow:0 6px 18px rgba(0,0,0,0.3);
+}
+
+/* Logout color */
+.logout-btn{
+background:linear-gradient(135deg,#ff4d4d,#cc0000);
+}
+
+/* Remove underline always */
+.nav-btn:link,
+.nav-btn:visited{
+text-decoration:none;
+}
+/* Floating Dark Mode Button */
+.dark-floating{
+position:fixed;
+bottom:20px;
+left:20px;
+background:linear-gradient(135deg,#667eea,#764ba2);
+color:white;
+border:none;
+width:55px;
+height:55px;
+border-radius:50%;
+font-size:22px;
+cursor:pointer;
+box-shadow:0 6px 20px rgba(0,0,0,0.3);
+transition:0.3s;
+z-index:999;
+}
+
+.dark-floating:hover{
+transform:scale(1.1);
+}
+/* ACTION BUTTON CONTAINER */
+.action-buttons{
+display:flex;
+gap:12px;
+margin-top:15px;
+flex-wrap:wrap;
+}
+/* BUTTON CONTAINER */
+.action-buttons{
+display:flex;
+gap:15px;
+margin-top:15px;
+}
+
+/* MAP BUTTON */
+.map-btn{
+text-decoration:none;
+background:#0072ff;
+color:white;
+padding:10px 18px;
+border-radius:25px;
+font-size:14px;
+transition:0.3s;
+}
+
+.map-btn:hover{
+background:#0057c2;
+}
+
+/* DOWNLOAD BUTTON */
+.download-btn{
+text-decoration:none;
+background:#ff7a18;
+color:white;
+padding:10px 18px;
+border-radius:25px;
+font-size:14px;
+transition:0.3s;
+}
+
+.download-btn:hover{
+background:#e56700;
+}
+
+/* REMOVE UNDERLINE ALWAYS */
+.action-btn:link,
+.action-btn:visited{
+text-decoration:none;
+}
